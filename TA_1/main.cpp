@@ -632,7 +632,7 @@ int main() {
 	else
 	{
 		caravan = decActors(characterClass);
-		cout << endl << caravan << endl;
+
 	}
 return 0;
 }
