@@ -100,10 +100,11 @@ int fight (int difficulty)
 		cout << "Wuerfle!" << " ("<< difficulty << ")\n\n";
 		system("pause");
 		cout << endl;
-		difficulty = difficulty + 2;
 		if (dice(difficulty) >= difficulty)
 		{
 			fightWon = '1';
+		}else{
+			difficulty = difficulty + 2;
 		}
 		if (difficulty > 20)
 			break;
@@ -160,24 +161,37 @@ int decLetter(char characterClass)
 		switch (characterClass)
 		{
 		case '1':
-			cout << "Panisch faehrst du mit deiner Hand zu der am Ledergürtel befestigten Schwertscheide.\n" <<
-				"Erleichterung kommt in dir auf als du sanft mit deinem Daumen über den vertrauten Knauf streichelst, der das Griffende deines Schwertes schmückt.\n";
+			cout << "Panisch faehrst du mit deiner Hand zu der am Ledergürtel befestigten Halterung.\n" <<
+				"Erleichterung kommt in dir auf als du sanft mit deinem Daumen ueber den vertrauten Knauf streichst,\n"
+				"der das Griffende deiner Axt ziert.\n";
 			break;
 		case '2':
-
+			cout << "Herumtreiber\n";
 			break;
 		case '3':
-
+			cout << "Magier\n";
 			break;
 		default:
 			break;
 		}
 
-		cout << "Du fühlst dich noch steif und frierst.\n";
+		cout << "Du fuehlst dich noch steif und frierst. Du fast instinktiv in deine Guerteltasche\n" <<
+			"und holst einen versiegelten Brief heraus. Du merkst wie ein Gefuehl von Dringlichkeit in dir aukommt\n\n" <<
+			"1) Siegel brechen und lesen\n2) Den Brief ungeoeffnet wieder zurueck legen\n\n" <<
+			"Wie entscheidest du dich ?\n";
 
 		openLetter = decisionMaking(2);
 
 		return openLetter;
+}
+
+void letterOpened()
+{
+	system("cls");
+	cout << "Wir schicken dir einen Kämpfer\n\n" <<
+		 "Der Kreis\n\n";
+	system("pause");
+
 }
 
 //NEW TEXT BLOCK//CHOOSING DIRECTION//
@@ -355,7 +369,7 @@ int fightWerewolf(char characterClass, int enterCave)
 			if (dice(difficulty) > difficulty)
 			{
 				cout << "Erfolgreich dran vorbei geschlichen\n";
-				fightWon = '1';
+				fightWon = '2';
 			}else{
 				cout << "Du trittst auf einen Zweig.\nDer Werwolf schaut dich direkt aus seinen roten Augen heraus an und stürzt auf dich los!\n\n";
 				difficulty = 14;
@@ -428,11 +442,15 @@ return fightWon;
 
 int caveLoot()
 {
+	int neckless = 1;
+
 	system("cls");
 
-	cout << "Du findest ein Artefakt\n";
+	cout << "Du findest eine eine Halskette\n\n";
 
-return 1;
+	system("pause");
+
+return neckless;
 }
 
 //NEW TEXT BLOCK// CONTINUE AFTER CAVE//
@@ -447,11 +465,14 @@ return 1;
 
 int main() {
 	
-	char characterClass, openingPath, helpingWounded, enterCave, fightWon, openLetter;
-	characterClass, openingPath, helpingWounded, enterCave, fightWon, openLetter = '0';
+	char characterClass = '0', openingPath = '0', helpingWounded = '0', enterCave = '0',fightWon = '0', 
+		 openLetter = '0', neckless = '0';
 
 	characterClass = classChoice();
 	openLetter = decLetter(characterClass);
+	if (openLetter == '1'){
+		letterOpened();
+	}
 	openingPath = decDirection();
 
 	if (openingPath=='1')
@@ -464,20 +485,17 @@ int main() {
 			if (enterCave != '1')
 			{
 				fightWon = fightWerewolf(characterClass, enterCave);
-				cout << fightWon;
+				if (fightWon != '0')
+				{
+					neckless = caveLoot();
+				}
 			}
-			if (fightWon == '1')
-			{
-				caveLoot();
-			}else{
-				decAfterCave();
-			}
-		}else{
-			decAfterCave();
 		}
-	}else{
+		decAfterCave();
+	}
+	else
+	{
 		decDwarves();
 	}
-
 return 0;
 }
