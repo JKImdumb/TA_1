@@ -124,6 +124,7 @@ int fight (int difficulty)
 
 
 
+
 //NEW TEXT BLOCK//
 
 int classChoice()
@@ -188,7 +189,7 @@ int decLetter(char characterClass)
 void letterOpened()
 {
 	system("cls");
-	cout << "Wir schicken dir einen Kämpfer\n\n" <<
+	cout << "Wir schicken dir einen Kaempfer\n\n" <<
 		 "Der Kreis\n\n";
 	system("pause");
 
@@ -204,10 +205,10 @@ int decDirection()
 	openingPath = '0';
 
 
-	cout << "Du blickst dich um. Stimmen in der Naehe, Weg der in Wald fuehrt.\n\n" << "1) Die Strasse entlang\n2) Folge den Stimme\n\n" ;
+	cout << "Du blickst dich um. Rauchsaeule in der Naehe, Weg der in Wald fuehrt.\n\n" << "1) Die Strasse entlang\n2) Zur Rauchsaeule\n\n" ;
 
-		cout << "Wie entscheidest du dich?\n";
-		openingPath = decisionMaking(2);	//determines which path you chose
+	cout << "Wie entscheidest du dich?\n";
+	openingPath = decisionMaking(2);	//determines which path you chose
 
 	return openingPath;
 }
@@ -275,13 +276,148 @@ return helpingWounded;
 
 //NEW TEXT BLOCK//FOLLOWING THE VOICES//
 
-int decDwarves()
+int decActors(char characterClass)
 {
+	char caravan = '0';
+
+	bool toggle = false;
+
 	system("cls");
 
-	cout << "du folgst den Stimmen";
+		cout << "Du gehst zu der Rauchsaeule. Schaustellergruppe aus 5 Zwergen und Elfen mit Waffen.\n\n" <<
+			"1) Zurueck auf die Lichtung und dem Weg folgen\n2) Mit erhobenen Haenden naehern\n3) Zum Lauschen naeher heran schleichen ";
 
-	return 1;
+		if (characterClass == '2')
+		{
+			cout << "(6)\n";
+		}
+		else
+		{
+			cout << "(16)\n";
+		}
+
+
+	switch (characterClass)
+	{
+	case '1':
+		cout << "4) Frontalangriff (12)\n\n";
+		break;
+	case '2':
+		cout << "4) Einzelnd anlocken und umbringen (12)\n\n";
+		break;
+	case '3':
+		cout << "4) Einen Tarnzauber wirken (12)\n\n";
+		break;
+	default:
+		break;
+	}
+
+		cout << "Wie entscheidest du dich?\n";
+
+		caravan = decisionMaking(4);
+		if (caravan == '4')
+		{
+			switch (characterClass)
+			{
+			case '1':
+				caravan = '5';
+				break;
+			case '2':
+				caravan = '6';
+				break;
+			case '3':
+				if (dice(12) >= 12)
+				{
+					caravan = '7';
+					cout << endl << endl;
+					system("pause");
+				}
+				else
+				{
+					system("pause");
+					system("cls");
+					
+					cout << "Du hast noch Schwierigkeit den Zauber zu wirken.\n\n" <<
+					"1) Zurueck auf die Lichtung und dem Weg folgen\n2) Mit erhobenen Haenden naehern\n" <<
+					"3) Zum Lauschen naeher heran schleichen (16)\n4) Einen Tarnzauber wirken (12)\n\n" <<
+					"Wie entscheidest du dich?\n";
+
+					caravan = decisionMaking(4);
+
+					if (dice(12) >= 12)
+					{
+						caravan = '7';
+						cout << endl << endl;
+						system("pause");
+					}
+					else
+					{
+						system("pause");
+						system("cls");
+
+						cout << "Selbst mit aller Konzentration die du aufbringen kannst gelingt es dir nicht diesen Zauber zu wirken\n\n" <<
+							"1) Zurueck auf die Lichtung und dem Weg folgen\n2) Mit erhobenen Haenden naehern\n" <<
+							"3) Zum Lauschen naeher heran schleichen (16)\n\n" <<
+							"Wie entscheidest du dich?\n";
+
+						caravan = decisionMaking(3);
+					}
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		else if (caravan == '3')
+		{
+			switch (characterClass)
+			{
+			case '1':
+				if (dice(16) >= 16)
+				{
+					caravan = '4';
+					cout << endl << endl;
+					system("pause");
+				}
+				else
+				{
+					cout << endl << endl;
+					system("pause");
+				}
+				break;
+			case '2':
+				if (dice(6) >= 6)
+				{
+					caravan = '4';
+					cout << endl << endl;
+					system("pause");
+				}
+				else
+				{
+					cout << endl << endl;
+					system("pause");
+				}
+				break;
+			case '3':
+				if (dice(16) >= 16)
+				{
+					caravan = '4';
+					cout << endl << endl;
+					system("pause");
+				}
+				else
+				{
+					cout << endl << endl;
+					system("pause");
+				}
+				break;
+			default:
+				break;
+			}
+		}
+		
+
+	return caravan;
 }
 
 //NEW TEXT BLOCK//CONTINUE AFTER WOUNDED// 
@@ -455,7 +591,7 @@ return neckless;
 
 //NEW TEXT BLOCK// CONTINUE AFTER CAVE//
 
-int decAfterCave()
+int decTavern(char characterClass, int openingPath, int helpingWounded, int enterCave, int fightWon, int neckless)
 {
 	system("cls");
 	cout << "Du gehst weiter\n";
@@ -466,7 +602,7 @@ return 1;
 int main() {
 	
 	char characterClass = '0', openingPath = '0', helpingWounded = '0', enterCave = '0',fightWon = '0', 
-		 openLetter = '0', neckless = '0';
+		 openLetter = '0', neckless = '0', caravan = '0';
 
 	characterClass = classChoice();
 	openLetter = decLetter(characterClass);
@@ -491,11 +627,12 @@ int main() {
 				}
 			}
 		}
-		decAfterCave();
+		decTavern(characterClass, openingPath, helpingWounded, enterCave,fightWon, neckless);
 	}
 	else
 	{
-		decDwarves();
+		caravan = decActors(characterClass);
+		cout << endl << caravan << endl;
 	}
 return 0;
 }
