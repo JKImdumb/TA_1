@@ -100,11 +100,11 @@ int fight (int difficulty)
 		cout << "Wuerfle!" << " ("<< difficulty << ")\n\n";
 		system("pause");
 		cout << endl;
+		difficulty = difficulty + 2;
 		if (dice(difficulty) >= difficulty)
 		{
 			fightWon = '1';
 		}
-		difficulty = difficulty + 2;
 		if (difficulty > 20)
 			break;
 	}
@@ -121,6 +121,8 @@ int fight (int difficulty)
 	return fightWon;
 }
 
+
+
 //NEW TEXT BLOCK//
 
 int classChoice()
@@ -130,9 +132,13 @@ int classChoice()
 	char characterClass;
 	characterClass = 0;
 
-	cout << "Du erwachst auf einer Waldlichtung, in der Mitte eines Kreises aus meterhohen Monolithen.\n" <<
-		"Die Sonne wirft ihre ersten Strahlen ueber die Baumkronen der uralten Eichen.\n" <<
-		"Mit dem morgendlichen Gesang der Amseln und Stare kommen auch die Erinnerungen daran zurueck wer du bist...\n\n" <<
+	cout << "Du oeffnest deine Augen... Du stehst auf einer Waldlichtung. Kreisfoermig um dich herum\n" <<
+		"stehen riesige Monolithen, die dich bedrohlich anzustarren scheinen.\n" <<
+		"Die schwungvollen dir fremden Runen auf ihnen verschwinden, als das kalte blaue Feuer, dass sie zeichnet, erlischt.\n" <<
+		"Die ersten waermenden Sonnenstrahlen bahnen sich ihren Weg ueber die Baumkronen der alten Eichen und treffen auf dein\n" <<
+		"Gesicht. Es kommt dir ungewoehnlich still vor. Kein Vogel. Kein Wind. Das einzige was du hoerst ist das langsam\n" <<
+		"abnehmende, dumpfe Rauschen in deinen Ohren.\n" <<
+		"Mit dem langsam abnehmenden Summen kommen auch deine Erinnerung daran zurueck wer du bist...\n\n"
 		"1) Barbar (Eine kaempferische Seele, sowohl stark mit Waffen als auch ohne)\n" <<
 		"2) Herumtreiber (Ein diebischer Einzelgaenger gut im Umgang mit Bogen & Dolch)\n" <<
 		"3) Magier (Gelehrter, und Meister der arkanen Kuenste)\n\n\n" <<
@@ -143,7 +149,38 @@ int classChoice()
 	return characterClass;
 }
 
-//NEW TEXT BLOCK//
+//NEW TEXT BLOCK//READING LETTER//
+
+int decLetter(char characterClass)
+{
+	system("cls");
+	int openLetter;
+	openLetter = 0;
+
+		switch (characterClass)
+		{
+		case '1':
+			cout << "Panisch faehrst du mit deiner Hand zu der am Ledergürtel befestigten Schwertscheide.\n" <<
+				"Erleichterung kommt in dir auf als du sanft mit deinem Daumen über den vertrauten Knauf streichelst, der das Griffende deines Schwertes schmückt.\n";
+			break;
+		case '2':
+
+			break;
+		case '3':
+
+			break;
+		default:
+			break;
+		}
+
+		cout << "Du fühlst dich noch steif und frierst.\n";
+
+		openLetter = decisionMaking(2);
+
+		return openLetter;
+}
+
+//NEW TEXT BLOCK//CHOOSING DIRECTION//
 
 int decDirection()
 {
@@ -151,6 +188,7 @@ int decDirection()
 
 	char openingPath;
 	openingPath = '0';
+
 
 	cout << "Du blickst dich um. Stimmen in der Naehe, Weg der in Wald fuehrt.\n\n" << "1) Die Strasse entlang\n2) Folge den Stimme\n\n" ;
 
@@ -409,10 +447,11 @@ return 1;
 
 int main() {
 	
-	char characterClass, openingPath, helpingWounded, enterCave, fightWon;
-	characterClass, openingPath, helpingWounded, enterCave, fightWon = '0';
+	char characterClass, openingPath, helpingWounded, enterCave, fightWon, openLetter;
+	characterClass, openingPath, helpingWounded, enterCave, fightWon, openLetter = '0';
 
 	characterClass = classChoice();
+	openLetter = decLetter(characterClass);
 	openingPath = decDirection();
 
 	if (openingPath=='1')
