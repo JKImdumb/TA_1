@@ -186,6 +186,8 @@ int decLetter(char characterClass)
 		return openLetter;
 }
 
+//NEW TEXT BLOCK//LETTER//
+
 void letterOpened()
 {
 	system("cls");
@@ -284,7 +286,7 @@ int decActors(char characterClass)
 
 	system("cls");
 
-		cout << "Du gehst zu der Rauchsaeule. Schaustellergruppe aus 5 Zwergen und Elfen mit Waffen.\n\n" <<
+		cout << "Du gehst zu der Rauchsaeule. Schaustellergruppe aus 3 Zwergen und einem Elfen mit Waffen.\n\n" <<
 			"1) Zurueck auf die Lichtung und dem Weg folgen\n2) Mit erhobenen Haenden naehern\n3) Zum Lauschen naeher heran schleichen ";
 
 		if (characterClass == '2')
@@ -303,7 +305,7 @@ int decActors(char characterClass)
 		cout << "4) Frontalangriff (12)\n\n";
 		break;
 	case '2':
-		cout << "4) Einzelnd anlocken und umbringen (12)\n\n";
+		cout << "4) Die Gruppe heimlich ausschalten\n\n";
 		break;
 	case '3':
 		cout << "4) Einen Tarnzauber wirken (12)\n\n";
@@ -418,6 +420,134 @@ int decActors(char characterClass)
 		
 
 	return caravan;
+}
+
+//NEW TEXT BLOCK//FIGHT VS ACTORS//
+
+int lootCorpses();
+int fightActors(char caravan)
+{
+	int difficulty = 12;
+	int counter = 4;
+	int decisions = 0;
+	char order = '0';
+	char fightWon = '0';
+
+	system("cls");
+	
+	if (caravan == '5')
+	{
+		cout << "Du stuermst auf die Schausteller los! Ein Kampf bricht aus.\n\n";
+
+		if (fight(21) == '1')
+		{
+			system("pause"); 
+			fightWon = '1';
+		}
+		else
+		{
+			system("pause");
+			system("cls");
+			cout << "Die Schausteller sind zwar nicht kampferfahren, aber durch ihre Ueberzahl nicht zu bezwingen.\n" <<
+				"Du fliehst zurueck auf die Lichtung bis sie dich nicht mehr Verfolgen. Du folgst dem Weg der in den Wald fuehrt.\n\n";
+
+			system("pause");
+		}
+	}
+	else
+	{
+		cout << "Du sondierst die Lage. Einer bei den Pferden, einer im Gebuesch beim pinkeln, und zwei am Lagerfeuer\n\n" <<
+			"1) Den Pinkler erledigen (4)\n2) Den bei den Pferden ausschalten (4)\n3) Dich um die am Lagerfeuer kuemmern (10)\n\n" <<
+			"Wie entscheidest du dich?\n";
+		
+		for (int i = 0; i < 3; i++)
+		{
+			decisions = 3;
+			order = decisionMaking(decisions);
+			decisions--;
+			cout << i << order;
+			system("cls");
+			switch (order)
+			{
+			case '1':
+				difficulty = 4;
+				if (dice(difficulty) >= difficulty)
+				{
+					if (i == 0)
+					{
+						cout << "Der Pinkler faellt zuerst. Um wen kümmerst du dich als naechstes?\n\n" <<
+							"1) Den bei den Pferden ausschalten (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";			
+					}
+					else if (i == 1)
+					{
+						cout << "Auch der bei den Pferden wird nun nicht mehr wieder aufstehen.\n";
+					}
+					else
+					{
+
+					}
+				}
+				break;
+			case '2':
+				difficulty = 4;
+				if (dice(difficulty) >= difficulty)
+				{
+					if (i == 0)
+					{
+						cout << "Der bei den Pferden faellt zuerst. Um wen kümmerst du dich als naechstes?\n\n" <<
+							"1) Den Pinkler erledigen (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
+					}
+					else if (i == 1)
+					{
+						cout << "Auch der Pinkler wird nun nicht mehr wieder aufstehen.\n";
+					}
+				}
+				break;
+			case '3':
+				difficulty = 10;
+
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	return fightWon;
+}
+
+int lootCorpses()
+{
+	int ring = 0;
+
+	system("cls");
+
+	cout << "Die Schausteller hatten keine Chance... Du pluenderst die Leichen und findest dabei einen Ring\n\n";
+	ring = 1;
+
+	system("pause");
+
+	return ring;
+}
+
+//NEW TEXT BLOCK//TALK TO ACTORS//
+
+int talkActors(char caravan)
+{
+	system("cls");
+	cout << "Du redest mit den Schaustellern.\n\n";
+
+	return 1;
+}
+
+//NEW TEXT BLOCK//EAVESDROP ACTORS//
+
+int eavesdropActors (char caravan)
+{
+	system("cls");
+	cout << "Du belauschst die Schausteller.";
+
+	return 1;
 }
 
 //NEW TEXT BLOCK//CONTINUE AFTER WOUNDED// 
@@ -601,8 +731,8 @@ return 1;
 
 int main() {
 	
-	char characterClass = '0', openingPath = '0', helpingWounded = '0', enterCave = '0',fightWon = '0', 
-		 openLetter = '0', neckless = '0', caravan = '0';
+	char characterClass = '0', openingPath = '0', helpingWounded = '0', enterCave = '0',fightWonWerewolf = '0', 
+		 openLetter = '0', neckless = '0', caravan = '0', fightWonActors = '0', ring = '0';
 
 	characterClass = classChoice();
 	openLetter = decLetter(characterClass);
@@ -620,18 +750,35 @@ int main() {
 			enterCave = approachWerewolf(characterClass);
 			if (enterCave != '1')
 			{
-				fightWon = fightWerewolf(characterClass, enterCave);
-				if (fightWon != '0')
+				fightWonWerewolf = fightWerewolf(characterClass, enterCave);
+				if (fightWonWerewolf != '0')
 				{
 					neckless = caveLoot();
 				}
 			}
 		}
-		decTavern(characterClass, openingPath, helpingWounded, enterCave,fightWon, neckless);
+		decTavern(characterClass, openingPath, helpingWounded, enterCave,fightWonWerewolf, neckless);
 	}
 	else
 	{
 		caravan = decActors(characterClass);
+
+		if (caravan == '4')
+		{
+			eavesdropActors(caravan);
+		}
+		else if (caravan == '5' || caravan == '6')
+		{
+			fightWonActors = fightActors(caravan);
+			if (fightWonActors == '1')
+			{
+				ring = lootCorpses();
+			}
+		}
+		else
+		{
+			talkActors(caravan);
+		}
 
 	}
 return 0;
