@@ -94,6 +94,8 @@ int fight (int difficulty)
 {
 	char fightWon;
 	fightWon = '0';
+	
+	cout << "Ein Kampf bricht aus...\n\n";
 
 	while (fightWon != '1')
 	{
@@ -436,7 +438,7 @@ int fightActors(char caravan)
 	
 	if (caravan == '5')
 	{
-		cout << "Du stuermst auf die Schausteller los! Ein Kampf bricht aus.\n\n";
+		cout << "Du stuermst auf die Schausteller los!\n";
 
 		if (fight(12) == '1')
 		{
@@ -466,169 +468,7 @@ int fightActors(char caravan)
 			input = decisionMaking(decisions);
 
 			system("cls");
-			switch (input)
-			{
-			case '1':
-				switch (i)
-				{
-				case 0:
-					difficulty = 4;
-					if (dice(difficulty) >= difficulty)
-					{
-						cout << "Der Pinkler faellt zuerst. Um wen kuemmerst du dich als naechstes?\n\n" <<
-							"1) Den bei den Pferden ausschalten (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
-						order = 1;
-					}
-					else
-					{
-						cout << "Du warst zu unvorsichtig und der Pinkler dreht sich noch beim Pinkeln zu dir um... Ihgitt...\nEin Kampf bricht aus\n\n";
-						i = i + 3;
-						if (fight(18) == '1')
-						{
-							system("pause");
-							fightWon = '1';
-							system("cls");
-							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
-						}
-						else
-						{
-							system("pause");
-							system("cls");
-							cout << "In einem offenem Kampf hast du keine Chance.\n";
-						}
-					}
 
-					break;
-				case 1:
-					difficulty = 4;
-					if (dice(difficulty) >= difficulty)
-					{
-						if (order == 1)
-						{
-							cout << "Auch der der bei den Pferden steht hat deiner Heimtuecke nichts entgegenzusetzen.\n";
-						}
-						else
-						{
-							cout << "Auch der Pinkler hat deiner Heimtuecke nichts entgegenzusetzen.\n";
-						}
-						
-					}
-					else
-					{
-						cout << "Du warst zu unvorsichtig. Eins der Pferde schart nervoes aus, woraufhin sich der Elf zu dir umdreht.\n" << 
-							"Ein Kampf bricht aus\n\n";
-						i = i + 3;
-						if (fight(16) == '1')
-						{
-							system("pause");
-							fightWon = '1';
-							system("cls");
-							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
-						}
-						else
-						{
-							system("pause");
-							system("cls");
-							cout << "In einem offenem Kampf hast du keine Chance.\n";
-						}
-					}
-					break;
-				case 2:
-					difficulty = 10;
-					if (dice(difficulty) >= difficulty)
-					{
-						cout << "Auch die 2 am Lagerfeuer schaltest du geschickt aus.\n\n";
-						fightWon = '1';
-					}
-					else
-					{
-
-					}
-					break;
-				default:
-					break;
-				}
-				break;
-			case '2':
-				switch (i)
-				{
-				case 0:
-					difficulty = 4;
-					if (dice(difficulty) >= difficulty)
-					{
-						cout << "Der bei den Pferden faellt zuerst. Um wen kuemmerst du dich als naechstes?\n\n" <<
-							"1) Den Pinkler erledigen (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
-						order = 2;
-					}
-					else
-					{
-						cout << "Du warst zu unvorsichtig. Eines der Pferde schart nervoes aus, woraufhin sich der Elf zu dir umdreht.\n" <<
-							"Ein Kampf bricht aus.\n\n";
-						i = i + 3;
-						if (fight(18) == '1')
-						{
-							system("pause");
-							fightWon = '1';
-							system("cls");
-							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
-						}
-						else
-						{
-							system("pause");
-							system("cls");
-							cout << "In einem offenem Kampf hast du keine Chance.\n";
-						}
-					}
-					break;
-				case 1:
-					difficulty = 4;
-					if (dice(difficulty) >= difficulty)
-					{
-						if (order == 2)
-						{
-							cout << "Auch der Pinkler hat deiner Heimtuecke nichts entgegenzusetzen.\n";
-						}
-						else
-						{
-							cout << "Auch der der bei den Pferden steht hat deiner Heimtuecke nichts entgegenzusetzen.\n";
-						}
-					}
-					else
-					{
-						cout << "Du warst zu unvorsichtig. Eins der Pferde schart nervoes aus, woraufhin sich der Elf zu dir umdreht.\n" <<
-							"Ein Kampf bricht aus\n\n";
-						i = i + 3;
-						if (fight(16) == '1')
-						{
-							system("pause");
-							fightWon = '1';
-							system("cls");
-							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
-						}
-						else
-						{
-							system("pause");
-							system("cls");
-							cout << "In einem offenem Kampf hast du keine Chance.\n";
-						}
-					}
-					break;
-
-					break;
-				case 2:
-
-					break;
-				default:
-					break;
-				}
-				break;
-			case '3':
-				difficulty = 10;
-
-				break;
-			default:
-				break;
-			}
 			decisions--;
 		}
 	}
