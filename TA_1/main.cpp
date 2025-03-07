@@ -424,12 +424,12 @@ int decActors(char characterClass)
 
 //NEW TEXT BLOCK//FIGHT VS ACTORS//
 
-int lootCorpses();
 int fightActors(char caravan)
 {
 	int difficulty = 12;
 	int decisions = 0;
-	char order = '0';
+	int order = 0;
+	char input = '0';
 	char fightWon = '0';
 
 	system("cls");
@@ -459,14 +459,14 @@ int fightActors(char caravan)
 			"1) Den Pinkler erledigen (4)\n2) Den bei den Pferden ausschalten (4)\n3) Dich um die am Lagerfeuer kuemmern (10)\n\n" <<
 			"Wie entscheidest du dich?\n";
 		
+		decisions = 3;
+
 		for (int i = 0; i < 3; i++)
 		{
-			decisions = 3;
-			order = decisionMaking(decisions);
-			decisions--;
-			cout << i << order;
+			input = decisionMaking(decisions);
+
 			system("cls");
-			switch (order)
+			switch (input)
 			{
 			case '1':
 				switch (i)
@@ -477,6 +477,7 @@ int fightActors(char caravan)
 					{
 						cout << "Der Pinkler faellt zuerst. Um wen kuemmerst du dich als naechstes?\n\n" <<
 							"1) Den bei den Pferden ausschalten (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
+						order = 1;
 					}
 					else
 					{
@@ -502,7 +503,15 @@ int fightActors(char caravan)
 					difficulty = 4;
 					if (dice(difficulty) >= difficulty)
 					{
-						cout << "Auch der bei den Pferden stehend hat deiner Heimtuecke nichts entgegenzusetzen.\n";
+						if (order == 1)
+						{
+							cout << "Auch der der bei den Pferden steht hat deiner Heimtuecke nichts entgegenzusetzen.\n";
+						}
+						else
+						{
+							cout << "Auch der Pinkler hat deiner Heimtuecke nichts entgegenzusetzen.\n";
+						}
+						
 					}
 					else
 					{
@@ -541,18 +550,76 @@ int fightActors(char caravan)
 				}
 				break;
 			case '2':
-				difficulty = 4;
-				if (dice(difficulty) >= difficulty)
+				switch (i)
 				{
-					if (i == 0)
+				case 0:
+					difficulty = 4;
+					if (dice(difficulty) >= difficulty)
 					{
 						cout << "Der bei den Pferden faellt zuerst. Um wen kuemmerst du dich als naechstes?\n\n" <<
 							"1) Den Pinkler erledigen (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
+						order = 2;
 					}
-					else if (i == 1)
+					else
 					{
-						cout << "Auch der Pinkler wird nun nicht wieder aufstehen.\n";
+						cout << "Du warst zu unvorsichtig. Eines der Pferde schart nervoes aus, woraufhin sich der Elf zu dir umdreht.\n" <<
+							"Ein Kampf bricht aus.\n\n";
+						i = i + 3;
+						if (fight(18) == '1')
+						{
+							system("pause");
+							fightWon = '1';
+							system("cls");
+							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
+						}
+						else
+						{
+							system("pause");
+							system("cls");
+							cout << "In einem offenem Kampf hast du keine Chance.\n";
+						}
 					}
+					break;
+				case 1:
+					difficulty = 4;
+					if (dice(difficulty) >= difficulty)
+					{
+						if (order == 2)
+						{
+							cout << "Auch der Pinkler hat deiner Heimtuecke nichts entgegenzusetzen.\n";
+						}
+						else
+						{
+							cout << "Auch der der bei den Pferden steht hat deiner Heimtuecke nichts entgegenzusetzen.\n";
+						}
+					}
+					else
+					{
+						cout << "Du warst zu unvorsichtig. Eins der Pferde schart nervoes aus, woraufhin sich der Elf zu dir umdreht.\n" <<
+							"Ein Kampf bricht aus\n\n";
+						i = i + 3;
+						if (fight(16) == '1')
+						{
+							system("pause");
+							fightWon = '1';
+							system("cls");
+							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
+						}
+						else
+						{
+							system("pause");
+							system("cls");
+							cout << "In einem offenem Kampf hast du keine Chance.\n";
+						}
+					}
+					break;
+
+					break;
+				case 2:
+
+					break;
+				default:
+					break;
 				}
 				break;
 			case '3':
@@ -562,6 +629,7 @@ int fightActors(char caravan)
 			default:
 				break;
 			}
+			decisions--;
 		}
 	}
 	if (fightWon == '0')
