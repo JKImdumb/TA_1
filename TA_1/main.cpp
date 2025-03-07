@@ -276,7 +276,7 @@ int decWounded(char characterClass)
 return helpingWounded;
 }
 
-//NEW TEXT BLOCK//FOLLOWING THE VOICES//
+//NEW TEXT BLOCK//FOLLOWING THE PILLAR OF SMOKE//
 
 int decActors(char characterClass)
 {
@@ -428,7 +428,6 @@ int lootCorpses();
 int fightActors(char caravan)
 {
 	int difficulty = 12;
-	int counter = 4;
 	int decisions = 0;
 	char order = '0';
 	char fightWon = '0';
@@ -439,19 +438,19 @@ int fightActors(char caravan)
 	{
 		cout << "Du stuermst auf die Schausteller los! Ein Kampf bricht aus.\n\n";
 
-		if (fight(21) == '1')
+		if (fight(12) == '1')
 		{
 			system("pause"); 
 			fightWon = '1';
+			system("cls");
+			cout << "Erschoepft und blutueberschmiert doch berauscht von dem Kampf gehst du\n" <<
+				"als der einzige Ueberlebende aus diesem Gemetzel hervor\n";
 		}
 		else
 		{
 			system("pause");
 			system("cls");
-			cout << "Die Schausteller sind zwar nicht kampferfahren, aber durch ihre Ueberzahl nicht zu bezwingen.\n" <<
-				"Du fliehst zurueck auf die Lichtung bis sie dich nicht mehr Verfolgen. Du folgst dem Weg der in den Wald fuehrt.\n\n";
-
-			system("pause");
+			cout << "Die Schausteller sind zwar nicht kampferfahren, aber durch ihre Ueberzahl nicht zu bezwingen.\n";
 		}
 	}
 	else
@@ -470,22 +469,75 @@ int fightActors(char caravan)
 			switch (order)
 			{
 			case '1':
-				difficulty = 4;
-				if (dice(difficulty) >= difficulty)
+				switch (i)
 				{
-					if (i == 0)
+				case 0:
+					difficulty = 4;
+					if (dice(difficulty) >= difficulty)
 					{
-						cout << "Der Pinkler faellt zuerst. Um wen kümmerst du dich als naechstes?\n\n" <<
-							"1) Den bei den Pferden ausschalten (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";			
+						cout << "Der Pinkler faellt zuerst. Um wen kuemmerst du dich als naechstes?\n\n" <<
+							"1) Den bei den Pferden ausschalten (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
 					}
-					else if (i == 1)
+					else
 					{
-						cout << "Auch der bei den Pferden wird nun nicht mehr wieder aufstehen.\n";
+						cout << "Du warst zu unvorsichtig und der Pinkler dreht sich noch beim Pinkeln zu dir um... Ihgitt...\nEin Kampf bricht aus\n\n";
+						i = i + 3;
+						if (fight(18) == '1')
+						{
+							system("pause");
+							fightWon = '1';
+							system("cls");
+							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
+						}
+						else
+						{
+							system("pause");
+							system("cls");
+							cout << "In einem offenem Kampf hast du keine Chance.\n";
+						}
+					}
+
+					break;
+				case 1:
+					difficulty = 4;
+					if (dice(difficulty) >= difficulty)
+					{
+						cout << "Auch der bei den Pferden stehend hat deiner Heimtuecke nichts entgegenzusetzen.\n";
+					}
+					else
+					{
+						cout << "Du warst zu unvorsichtig. Eins der Pferde schart nervoes aus, woraufhin sich der Elf zu dir umdreht.\n" << 
+							"Ein Kampf bricht aus\n\n";
+						i = i + 3;
+						if (fight(16) == '1')
+						{
+							system("pause");
+							fightWon = '1';
+							system("cls");
+							cout << "Nur mit einer Menge Glück und purem Willen schaffst du es die heranstürmenden Angreifer niederzustrecken\n";
+						}
+						else
+						{
+							system("pause");
+							system("cls");
+							cout << "In einem offenem Kampf hast du keine Chance.\n";
+						}
+					}
+					break;
+				case 2:
+					difficulty = 10;
+					if (dice(difficulty) >= difficulty)
+					{
+						cout << "Auch die 2 am Lagerfeuer schaltest du geschickt aus.\n\n";
+						fightWon = '1';
 					}
 					else
 					{
 
 					}
+					break;
+				default:
+					break;
 				}
 				break;
 			case '2':
@@ -494,12 +546,12 @@ int fightActors(char caravan)
 				{
 					if (i == 0)
 					{
-						cout << "Der bei den Pferden faellt zuerst. Um wen kümmerst du dich als naechstes?\n\n" <<
+						cout << "Der bei den Pferden faellt zuerst. Um wen kuemmerst du dich als naechstes?\n\n" <<
 							"1) Den Pinkler erledigen (4)\n2) Dich um die am Lagerfeuer kuemmern (10)\n\n";
 					}
 					else if (i == 1)
 					{
-						cout << "Auch der Pinkler wird nun nicht mehr wieder aufstehen.\n";
+						cout << "Auch der Pinkler wird nun nicht wieder aufstehen.\n";
 					}
 				}
 				break;
@@ -512,6 +564,11 @@ int fightActors(char caravan)
 			}
 		}
 	}
+	if (fightWon == '0')
+	{
+		cout << "Du fliehst zurueck auf die Lichtung bis sie dich nicht mehr Verfolgen. Du folgst dem Weg der in den Wald fuehrt.\n\n";
+		system("pause");
+	}
 
 	return fightWon;
 }
@@ -520,9 +577,7 @@ int lootCorpses()
 {
 	int ring = 0;
 
-	system("cls");
-
-	cout << "Die Schausteller hatten keine Chance... Du pluenderst die Leichen und findest dabei einen Ring\n\n";
+	cout << "Du pluenderst die Leichen und findest dabei einen Ring und einen Heiltrank\n\n";
 	ring = 1;
 
 	system("pause");
